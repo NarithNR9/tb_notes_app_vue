@@ -24,6 +24,8 @@ export const useNoteStore = defineStore('note', () => {
     if (index !== -1) {
       notes.value[index] = updatedNote;
     }
+    notes.value.splice(index, 1);
+    notes.value.unshift(updatedNote);
     localStorage.setItem('notes', JSON.stringify(notes.value));
   }
 
