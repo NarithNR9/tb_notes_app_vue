@@ -4,15 +4,24 @@
       class="bg-blue-500 h-[10vh] rounded-t-md text-white px-6 py-3 flex justify-between items-center"
     >
       <div class="md:text-2xl font-bold">Notes Application</div>
-      <Search :selectNote="selectNote"/>
+      <Search :selectNote="selectNote" />
     </div>
-    <div class="grid grid-cols-12 h-[80vh] rounded-b-md ">
+    <div class="grid grid-cols-12 h-[80vh] rounded-b-md">
       <div
         id="note-list"
         class="col-span-12 md:col-span-4 p-6 bg-amber-200 rounded-bl-md"
       >
         <div class="flex justify-between">
-          <h2 class="text-xl font-semibold">All Notes</h2>
+          <div
+            class="flex items-center space-x-1 cursor-pointer"
+            @click="
+              sort = sort === 'asc' ? 'desc' : 'asc';
+              store.SortNotesByDate(sort);
+            "
+          >
+            <h2 class="text-xl font-semibold">All Notes</h2>
+            <IconsSort class="w-4 h-4" :sort="sort" />
+          </div>
           <div class="flex space-x-3">
             <IconsDelete
               class="w-6 h-6 cursor-pointer"
@@ -99,6 +108,7 @@
 
 <script setup lang="ts">
 import IconsSave from '../components/icons/Save.vue';
+import IconsSort from '../components/icons/Sort.vue';
 import IconsDelete from '../components/icons/Delete.vue';
 import IconsPlus from '../components/icons/Plus.vue';
 import { useNoteStore } from '@/stores/notes';
@@ -108,6 +118,7 @@ import Search from '../components/Search.vue';
 
 const store = useNoteStore();
 
+const sort = ref('');
 const formData = ref({
   title: '',
   content: '',

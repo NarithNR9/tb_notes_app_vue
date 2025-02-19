@@ -48,6 +48,22 @@ export const useNoteStore = defineStore('note', () => {
     );
   }
 
+  function SortNotesByDate(type: string) {
+    if (type === 'asc') {
+      return notes.value.sort((a, b) => {
+        return (
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+      });
+    } else if (type === 'desc') {
+      notes.value.sort((a, b) => {
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      });
+    }
+  }
+
   return {
     note,
     notes,
@@ -56,5 +72,6 @@ export const useNoteStore = defineStore('note', () => {
     DeleteNote,
     GetAllNotes,
     SearchNotes,
+    SortNotesByDate,
   };
 });
