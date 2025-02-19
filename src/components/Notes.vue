@@ -162,6 +162,10 @@ const selectNote = (note: INote) => {
 function timeAgo(date: Date) {
   const now = new Date();
   const updatedDate = new Date(date);
+
+  // Adjust for UTC+7 timezone (subtract 7 hours from UTC time)
+  updatedDate.setHours(updatedDate.getHours() + 7);
+
   const diffInSeconds = Math.floor(
     ((now as any) - (updatedDate as any)) / 1000
   );
