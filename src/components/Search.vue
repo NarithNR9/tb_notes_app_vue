@@ -28,7 +28,7 @@
       required
     />
     <div
-      class="absolute z-20 top-7 overflow-auto max-h-[50vh] w-full"
+      class="absolute z-20 top-9 overflow-auto max-h-[50vh] w-full"
       v-if="searchedNotes.length"
     >
       <ul>
