@@ -59,6 +59,12 @@
         >
           < Back
         </div>
+        <div
+          class="absolute top-0 flevx w-full text-center text-xs text-gray-600"
+          v-if="store.note.updated_at"
+        >
+          Updated At: {{ timeAgo(store.note.updated_at) }}
+        </div>
         <form @submit.prevent="handleAddNewNote">
           <input
             v-model="formData.title"
@@ -141,6 +147,33 @@ const selectNote = (note: INote) => {
   formData.value.title = note.title;
   formData.value.content = note.content;
 };
+
+function timeAgo(date: Date) {
+  const now = new Date();
+  const updatedDate = new Date(date);
+  const diffInSeconds = Math.floor(
+    ((now as any) - (updatedDate as any)) / 1000
+  );
+
+  const intervals = {
+    year: 31536000,
+    month: 2592000,
+    week: 604800,
+    day: 86400,
+    hour: 3600,
+    minute: 60,
+    second: 1,
+  };
+
+  for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+    const interval = Math.floor(diffInSeconds / secondsInUnit);
+    if (interval >= 1) {
+      return `${interval} ${unit}${interval > 1 ? 's' : ''} ago`;
+    }
+  }
+
+  return 'just now';
+}
 
 onMounted(() => {
   store.GetAllNotes();
