@@ -52,7 +52,7 @@
             >
               <span class="font-semibold">{{ note.title }}</span>
               <span class="text-xs">{{
-                new Date(note.created_at).toLocaleDateString('en-GB')
+                note.created_at ? new Date(note.created_at).toLocaleDateString('en-GB') : ''
               }}</span>
             </li>
           </ul>
@@ -127,19 +127,13 @@ const formData = ref({
 const handleAddNewNote = () => {
   if (store.note.id) {
     store.UpdateNote(store.note.id, {
-      id: store.note.id,
       title: formData.value.title,
       content: formData.value.content,
-      updated_at: new Date(),
-      created_at: store.note.created_at,
     });
   } else {
     store.AddNewNote({
-      id: Math.floor(Math.random() * 1000),
       title: formData.value.title,
       content: formData.value.content,
-      created_at: new Date(),
-      updated_at: new Date(),
     });
   }
 };
@@ -156,7 +150,7 @@ const selectNote = (note: INote) => {
   switchNoteView();
   store.note = note;
   formData.value.title = note.title;
-  formData.value.content = note.content;
+  formData.value.content = note.content || '';
 };
 
 function timeAgo(date: Date) {
