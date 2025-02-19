@@ -35,6 +35,7 @@
             <IconsPlus
               class="w-6 h-6 cursor-pointer"
               @click="
+                switchNoteView();
                 store.note = {} as INote;
                 formData.title = '';
                 formData.content = '';
@@ -52,7 +53,9 @@
             >
               <span class="font-semibold">{{ note.title }}</span>
               <span class="text-xs">{{
-                note.created_at ? new Date(note.created_at).toLocaleDateString('en-GB') : ''
+                note.created_at
+                  ? new Date(note.created_at).toLocaleDateString('en-GB')
+                  : ''
               }}</span>
             </li>
           </ul>
@@ -67,6 +70,20 @@
           @click="switchNoteView"
         >
           < Back
+        </div>
+        <div
+          class="absolute right-3 top-1 underline md:hidden"
+          @click="switchNoteView"
+        >
+          <IconsDelete
+            class="w-6 h-6 cursor-pointer"
+            v-if="store.note.id"
+            @click="
+              store.DeleteNote(store.note!.id);
+              formData.title = '';
+              formData.content = '';
+            "
+          />
         </div>
         <div
           class="absolute top-0 flevx w-full text-center text-xs text-gray-600"
@@ -98,7 +115,11 @@
             class="absolute bottom-0 right-0 p-3 rounded-full bg-blue-500 m-6 shadow-xl cursor-pointer"
             type="submit"
           >
-            <IconsSave class="w-6 h-6" type="submit" />
+            <IconsSave
+              @click="switchNoteView"
+              class="w-6 h-6"
+              type="submit"
+            />
           </button>
         </form>
       </div>
