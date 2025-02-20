@@ -43,7 +43,7 @@
             />
           </div>
         </div>
-        <div class="overflow-auto max-h-[70vh]">
+        <div v-if="store.notes.length == 0" class="overflow-auto max-h-[70vh]">
           <ul>
             <li
               v-for="note in store.notes"
@@ -59,6 +59,9 @@
               }}</span>
             </li>
           </ul>
+        </div>
+        <div v-else class="text-center text-xl my-32">
+          Currently No Note ...
         </div>
       </div>
       <div
@@ -115,11 +118,7 @@
             class="absolute bottom-0 right-0 p-3 rounded-full bg-blue-500 m-6 shadow-xl cursor-pointer"
             type="submit"
           >
-            <IconsSave
-              @click="switchNoteView"
-              class="w-6 h-6"
-              type="submit"
-            />
+            <IconsSave @click="switchNoteView" class="w-6 h-6" type="submit" />
           </button>
         </form>
       </div>
