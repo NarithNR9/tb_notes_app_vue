@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import type { INote } from '../types/note';
-import axios from 'axios';
+import useApi from '../composables/index.ts';
 
 export const useNoteStore = defineStore('note', () => {
   const notes = ref([] as INote[]);
@@ -9,7 +9,7 @@ export const useNoteStore = defineStore('note', () => {
 
   async function GetAllNotes() {
     try {
-      const res = await axios.get('/api/note');
+      const res = await useApi.get('/api/note');
       notes.value = res.data;
     } catch (error) {
       console.error('Error fetching notes:', error);
@@ -18,7 +18,7 @@ export const useNoteStore = defineStore('note', () => {
 
   async function AddNewNote(newNote: INote) {
     try {
-      await axios.post('/api/note', newNote);
+      await useApi.post('/api/note', newNote);
     } catch (error) {
       console.error('Error fetching notes:', error);
     }
@@ -28,7 +28,7 @@ export const useNoteStore = defineStore('note', () => {
 
   async function UpdateNote(id: number, updatedNote: INote) {
     try {
-      await axios.put('/api/note/' + id, updatedNote);
+      await useApi.put('/api/note/' + id, updatedNote);
     } catch (error) {
       console.error('Error fetching notes:', error);
     }
@@ -37,7 +37,7 @@ export const useNoteStore = defineStore('note', () => {
 
   async function DeleteNote(id: number) {
     try {
-      await axios.delete('/api/note/' + id);
+      await useApi.delete('/api/note/' + id);
     } catch (error) {
       console.error('Error fetching notes:', error);
     }
