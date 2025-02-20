@@ -43,7 +43,7 @@
             />
           </div>
         </div>
-        <div v-if="store.notes.length == 0" class="overflow-auto max-h-[70vh]">
+        <div v-if="store.notes.length > 0" class="overflow-auto max-h-[70vh]">
           <ul>
             <li
               v-for="note in store.notes"
